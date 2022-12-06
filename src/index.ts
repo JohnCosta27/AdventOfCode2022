@@ -3,6 +3,7 @@ import { Day1 } from "./Day1/day1";
 import { Day2 } from "./Day2";
 import { Day3 } from "./Day3";
 import { Day4 } from "./Day4";
+import { Day5 } from "./Day5";
 
 export type DayFunc = (input: string) => [number, number];
 
@@ -38,7 +39,6 @@ console.log("Part 1:", day3result[0])
 console.log("Part 2:", day3result[1])
 console.timeEnd("Time Taken");
 console.log("------------------------------------------")
-*/
 
 const day4input = await file('./inputs/day4.txt').text();
 console.time("Time Taken");
@@ -49,4 +49,14 @@ console.log("Part 1:", day4result[0])
 console.log("Part 2:", day4result[1])
 console.timeEnd("Time Taken");
 console.log("------------------------------------------")
+*/
 
+const day5input = await file('./inputs/day5.txt').text();
+console.time("Time Taken");
+const day5result = Day5(day5input);
+
+console.log("------------------Day 3--------------------")
+console.log("Part 1:", day5result[0])
+console.log("Part 2:", day5result[1])
+console.timeEnd("Time Taken");
+console.log("------------------------------------------")
