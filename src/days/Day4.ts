@@ -1,4 +1,4 @@
-import { DayFunc } from ".";
+import { DayFunc } from "..";
 
 export const Day4: DayFunc = (input) => {
   const pairs: number[][][] = input
@@ -8,7 +8,6 @@ export const Day4: DayFunc = (input) => {
 
   const [part1, part2] = pairs.reduce(
     ([part1, part2], next) => {
-      console.log(next);
       if (
         (next[0][0] <= next[1][0] && next[0][1] >= next[1][1]) ||
         (next[1][0] <= next[0][0] && next[1][1] >= next[0][1])

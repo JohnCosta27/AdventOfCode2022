@@ -1,4 +1,4 @@
-import { DayFunc } from ".";
+import { DayFunc } from "..";
 
 // A = Rock, B = Paper, C = Scissors
 // X = Rock, Y = Paper, Z = Scissors

@@ -1,4 +1,4 @@
-import { DayFunc } from ".";
+import { DayFunc } from "..";
 
 const getCode = (x: Set<string>): number => {
   const code = x.values().next().value.charCodeAt(0);
