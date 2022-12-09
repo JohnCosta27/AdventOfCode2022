@@ -1,5 +1,5 @@
 import { file } from "bun";
-import { Day1, Day2, Day3, Day4, Day5, Day6, Day7 } from "./days";
+import { Day1, Day2, Day3, Day4, Day5, Day6, Day7, Day8 } from "./days";
 
 export type DayFunc = (input: string) => [any, any];
 
@@ -21,11 +21,12 @@ const RunDay = async (
 console.log("Advent Of Code - 2022");
 console.time("total");
 
-await RunDay(Day1, 'day1');
-await RunDay(Day2, 'day2');
-await RunDay(Day3, 'day3');
-await RunDay(Day4, 'day4');
-await RunDay(Day5, 'day5');
-await RunDay(Day6, 'day6');
-await RunDay(Day7, 'day7');
+// await RunDay(Day1, 'day1');
+// await RunDay(Day2, 'day2');
+// await RunDay(Day3, 'day3');
+// await RunDay(Day4, 'day4');
+// await RunDay(Day5, 'day5');
+// await RunDay(Day6, 'day6');
+// await RunDay(Day7, 'day7');
+await RunDay(Day8, 'day8');
 console.timeEnd("total");
