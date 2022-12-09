@@ -3,8 +3,16 @@ import { DayFunc } from "..";
 const GetSmaller = (arr: number[], target: number): number => {
   let i = 0;
   for (; i < arr.length && arr[i] < target; i++) {}
-  return i + 1;
+  return i;
 };
+
+const Part2 = (arr: number[], target: number): number => {
+  const i = arr.findIndex(i => i >= target);
+  if (i === -1) {
+    return arr.length;
+  }
+  return i + 1;
+}
 
 export const Day8: DayFunc = (input) => {
   const parsed: number[][] = input
@@ -24,18 +32,23 @@ export const Day8: DayFunc = (input) => {
       const row = parsed[i];
       const col = transposed[j];
 
-      const left = row.slice(0, j);
+      const left = row.slice(0, j).reverse();
       const right = row.slice(j + 1);
-      const top = col.slice(0, i);
+      const top = col.slice(0, i).reverse();
       const bottom = col.slice(i + 1);
 
       if (
-        GetSmaller(left.reverse(), c) - 1 === left.length ||
-        GetSmaller(right, c) - 1=== right.length ||
-        GetSmaller(top.reverse(), c) - 1 === top.length ||
-        GetSmaller(bottom, c) - 1 === bottom.length
+        GetSmaller(left, c) === left.length ||
+        GetSmaller(right, c) === right.length ||
+        GetSmaller(top, c) === top.length ||
+        GetSmaller(bottom, c) === bottom.length
       ) {
         part1++;
+      }
+
+      const view = Part2(left, c) * Part2(right, c) * Part2(top, c) * Part2(bottom, c);
+      if (view > part2) {
+        part2 = view;
       }
     }
   }
