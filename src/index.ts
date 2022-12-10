@@ -1,5 +1,5 @@
 import { file } from "bun";
-import { Day1, Day2, Day3, Day4, Day5, Day6, Day7, Day8, Day9 } from "./days";
+import { Day1, Day2, Day3, Day4, Day5, Day6, Day7, Day8, Day9, Day10 } from "./days";
 
 export type DayFunc = (input: string) => [any, any];
 
@@ -29,5 +29,6 @@ console.time("total");
 // await RunDay(Day6, 'day6');
 // await RunDay(Day7, 'day7');
 // await RunDay(Day8, 'day8');
-await RunDay(Day9, 'day9');
+// await RunDay(Day9, 'day9');
+await RunDay(Day10, 'day10');
 console.timeEnd("total");
