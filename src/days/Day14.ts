@@ -1,10 +1,17 @@
-import { DayFunc } from "..";
+import { DayFunc, UP } from "..";
 
-const PrintGrid = (grid: string[][]) => {
-  grid.forEach((i) => {
-    console.log(i);
-  });
-  console.log("----------------------");
+const writer = Bun.stdout.writer();
+
+const PrintGrid = async (g: string[][]) => {
+  for (let i = 0; i < g.length; i++) {
+    for (let j = 0; j < g[0].length; j++) {
+      writer.write(g[i][j]);
+    }
+    writer.write('\n');
+  }
+  for (let i = 0; i < g.length; i++) {
+    writer.write(UP)
+  }
 };
 
 let minX = 0;
@@ -49,6 +56,11 @@ const OneTick = (
 };
 
 export const Day14: DayFunc = (input) => {
+  writer.write(UP);
+  writer.write(UP);
+  writer.write(UP);
+  writer.write(UP);
+
   const parsed = input
     .trim()
     .split("\n")
@@ -89,7 +101,7 @@ export const Day14: DayFunc = (input) => {
   });
   grid[sand[0]][sand[1]] = "+";
 
-  const increaseSize = 10000;
+  const increaseSize = 200;
   const part2Grid: string[][] = JSON.parse(JSON.stringify(grid));
   for (let i = 0; i < part2Grid.length; i++) {
     part2Grid[i] = [...Array(increaseSize).fill("."), ...part2Grid[i], ...Array(increaseSize).fill(".")];
@@ -99,6 +111,8 @@ export const Day14: DayFunc = (input) => {
   part2Grid.push(Array(xSize + increaseSize * 2 + 1).fill("#"));
 
   while (true) {
+    // Bun.sleepSync(0.01);
+    // PrintGrid(grid);
     const [settled, gameOver, newSand] = OneTick(sand, grid);
 
     if (gameOver) {
@@ -113,6 +127,9 @@ export const Day14: DayFunc = (input) => {
       grid[sand[0]][sand[1]] = "+";
     }
   }
+    // for (let i = 0; i < grid.length; i++) {
+     // writer.write('\n');
+    // }
 
   const part1 = grid.reduce((p, n) => p + n.filter((i) => i === "o").length, 0);
 
@@ -120,6 +137,8 @@ export const Day14: DayFunc = (input) => {
   ySize = ySize + 2;
   sand = [0, 500 - minX];
   while (true) {
+    Bun.sleepSync(0.001);
+    PrintGrid(part2Grid);
     const [settled, gameOver, newSand] = OneTick(sand, part2Grid);
     if (gameOver) {
       part2Grid[sand[0]][sand[1]] = ".";
@@ -137,6 +156,9 @@ export const Day14: DayFunc = (input) => {
       part2Grid[sand[0]][sand[1]] = "+";
     }
   }
+    for (let i = 0; i < grid.length; i++) {
+      writer.write('\n');
+    }
   const part2 = part2Grid.reduce((p, n) => p + n.filter((i) => i === "o").length, 0);
 
   return [part1, part2];

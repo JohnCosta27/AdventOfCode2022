@@ -17,6 +17,7 @@ import {
 } from "./days";
 
 export type DayFunc = (input: string) => [any, any];
+export const UP = "\033[F";
 
 const RunDay = async (
   dayFunc: (input: string) => [number, number],
