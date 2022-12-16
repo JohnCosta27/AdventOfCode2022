@@ -14,6 +14,7 @@ import {
   Day12,
   Day13,
   Day14,
+  Day15,
 } from "./days";
 
 export type DayFunc = (input: string) => [any, any];
@@ -54,5 +55,6 @@ console.time("total");
 // await RunDay(Day11, 'day11');
 // await RunDay(Day12, 'day12');
 // await RunDay(Day13, 'day13');
-await RunDay(Day14, "day14");
+// await RunDay(Day14, "day14");
+await RunDay(Day15, 'day15');
 console.timeEnd("total");
