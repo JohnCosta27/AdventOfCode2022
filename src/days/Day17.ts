@@ -114,8 +114,19 @@ function SettleBlock(
 
 function* BlockGen(start = 0, end = Infinity, step = 1) {
   for (let i = start; i < end; i += step) {
-    yield blocks[i % blocks.length]!;
+    yield { block: blocks[i % blocks.length]!, index: i % blocks.length };
   }
+}
+
+function CalcHeight(grid: string[][]) {
+  let e = 0;
+  for (let i = grid.length - 1; i >= 0; i--) {
+    if (grid[i].some((j) => j === "#")) {
+      break;
+    }
+    e++;
+  }
+  return grid.length - e;
 }
 
 export const Day17: DayFunc = (input) => {
@@ -125,42 +136,18 @@ export const Day17: DayFunc = (input) => {
   const grid: string[][] = [];
   let jet = 0;
   let part1: number;
-  const lcm = parsed.length * 5 * 7;
+  let addedOnHeight = 0;
 
-  const depthMap: Record<string, number> = {};
+  const depthMap: Record<string, {height: number; index: number}> = {};
 
-  for (let i = 0; i < 1000000000000; i++) {
-
-    if (i % lcm === 0) {
-      const newDepth = [0, 0, 0, 0, 0, 0, 0];
-      for (let a = 0; a < 7; a++) {
-        let b = 0;
-        for (b = grid.length - 1; b >= 0; b--) {
-          if (grid[b][a] === '#') {
-            break;
-          }
-        }
-        newDepth[a] = grid.length - b;
-      }
-      const stringed = JSON.stringify(newDepth);
-      if (stringed in depthMap) {
-        // console.log(grid.length - depthMap[stringed]);
-      } else {
-        depthMap[JSON.stringify(newDepth)] = grid.length;
-      }
-    }
-
+  for (let i = 0; i < 1e12; i++) {
     if (i === 2022) {
-      let e = 0;
-      for (let i = grid.length - 1; i >= 0; i--) {
-        if (grid[i].some((j) => j === "#")) {
-          break;
-        }
-        e++;
-      }
-      part1 = grid.length - e;
+      part1 = CalcHeight(grid);
     }
-    const block = gen.next().value as string[][];
+
+    const g = gen.next().value;
+    if (!g) return;
+    const block = g.block;
 
     // Not right, not necessarily the top row.
     let emptyRows = 0;
@@ -203,7 +190,29 @@ export const Day17: DayFunc = (input) => {
       }
     } while (movedDown);
     SettleBlock(grid, block, topLeft);
+
+    const depth = [0, 0, 0, 0, 0, 0, 0];
+    for (let x = 0; x < 7; x++) {
+      for (let y = grid.length - 1; y >= 0; y--) {
+        if (grid[y][x] === '#') {
+          depth[x] = grid.length - y;
+          break;
+        }
+      }
+    }
+    const key = `${g.index},${jet % parsed.length},${JSON.stringify(depth)}`;
+    if (key in depthMap) {
+      const height = CalcHeight(grid);
+      const mapEntry = depthMap[key];
+      const diff = height - mapEntry.height;
+      const cycleNum = Math.floor((1e12 - i) / (i - mapEntry.index));
+      i += cycleNum * (i - mapEntry.index);
+      addedOnHeight += diff * cycleNum;
+    } else {
+      depthMap[key] = { height: CalcHeight(grid), index: i };
+    }
+
   }
 
-  return [part1, 0];
+  return [part1, CalcHeight(grid) + addedOnHeight];
 };
