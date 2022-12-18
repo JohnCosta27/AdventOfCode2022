@@ -15,6 +15,7 @@ import {
   Day13,
   Day14,
   Day17,
+  Day15,
 } from "./days";
 
 export type DayFunc = (input: string) => [any, any];
