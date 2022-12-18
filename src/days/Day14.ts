@@ -111,7 +111,6 @@ export const Day14: DayFunc = (input) => {
     }
   });
   PrintGrid(grid);
-  PrintGrid(grid);
   grid[sand[0]][sand[1]] = "+";
 
   const increaseSize = 200;
@@ -124,7 +123,7 @@ export const Day14: DayFunc = (input) => {
   part2Grid.push(Array(xSize + increaseSize * 2 + 1).fill("#"));
 
   while (true) {
-    Bun.sleepSync(0.5);
+    Bun.sleepSync(0.01);
     const [settled, gameOver, newSand] = OneTick(sand, grid);
     EraseSand([sand[1], sand[0]]);
 
